@@ -1,6 +1,8 @@
 [versions]
 agp = "8.8.1"
-kotlin = "1.9.24"
+coreKtxVersion = "1.6.1"
+junitKtx = "1.2.1"
+kotlin = "1.9.25"
 coreKtx = "1.15.0"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -11,16 +13,56 @@ navigationFragmentKtx = "2.8.8"
 navigationUiKtx = "2.8.8"
 junitJunit = "4.12"
 
+activityCompose = "1.8.2"
+composeBom = "2024.03.00"
+constraintlayoutCompose = "1.0.0-beta02"
+hiltNavigationCompose = "1.0.0"
+lifecycleViewmodelCompose = "2.7.0"
+navigationCompose = "2.7.7"
+material3 = "1.2.1"
+
+
 [libraries]
+
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+
+androidx-core = { module = "androidx.test:core", version.ref = "coreKtxVersion" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitKtx" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "coreKtxVersion" }
+androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref  = "coreKtxVersion"}
+core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtxVersion" }
+
+
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
+
+#Compose Libs
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" } # Compose integration with activities.  Allows using Compose for UI within an Activity.
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" } # Bill of Materials for Compose.  Provides version management and ensures compatibility between Compose libraries.
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" } # ConstraintLayout in Compose.  Offers flexible and powerful layout capabilities.
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycleViewmodelCompose" } # Lifecycle support for Compose.  Integrates Compose with Android lifecycles (e.g., managing composable state).
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" } # Material Design 3 components for Compose.  Provides pre-built UI elements following the latest Material design guidelines.
+androidx-ui = { module = "androidx.compose.ui:ui" } # Core Compose UI library.  Provides fundamental building blocks for creating UI elements.
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" } # Tools for Compose UI development. Includes inspectors and other debugging aids.
+androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" } # Preview functionality for Compose.  Allows visualizing Compose components in the IDE.
+ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+
+#androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" } # Hilt integration with Compose Navigation.  Facilitates dependency injection in navigation graphs.
+#androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" } # Navigation library for Compose.  Enables building navigation graphs and handling transitions between screens.
+#androidx-navigation-runtime-ktx = { module = "androidx.navigation:navigation-runtime-ktx", version.ref = "navigationCompose" } # Navigation runtime with Kotlin extensions.  Offers convenient Kotlin-idiomatic ways to interact with the navigation library.
+#androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "runtimeLivedata" } # LiveData integration for Compose.  Allows observing LiveData values from within Compose components.
+#androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" } # ViewModel integration for Compose.  Connects ViewModels to Compose UI for state management.
+
+#Espressor Libs
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "espressoCore" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
