@@ -8,7 +8,7 @@ import org.junit.Test
 class ProblemsUtilityTest {
 
     @Test
-    fun testPalindrome_emptyString() {
+    fun `test Palindrome emptyString`() {
         assertTrue("".isPalindrome())
     }
 

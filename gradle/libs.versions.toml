@@ -26,9 +26,9 @@ material3 = "1.2.1"
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 
+junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
 androidx-core = { module = "androidx.test:core", version.ref = "coreKtxVersion" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "junitKtx" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "coreKtxVersion" }
 androidx-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref  = "coreKtxVersion"}
 core-ktx = { module = "androidx.test:core-ktx", version.ref = "coreKtxVersion" }
@@ -39,7 +39,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
-junit-junit = { group = "junit", name = "junit", version.ref = "junitJunit" }
+
 
 #Compose Libs
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" } # Compose integration with activities.  Allows using Compose for UI within an Activity.
@@ -52,6 +52,8 @@ androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" } # Tools for 
 androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" } # Preview functionality for Compose.  Allows visualizing Compose components in the IDE.
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-navigation-runtime-ktx = { module = "androidx.navigation:navigation-runtime-ktx", version.ref = "navigationCompose" }
 
 #androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" } # Hilt integration with Compose Navigation.  Facilitates dependency injection in navigation graphs.
 #androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" } # Navigation library for Compose.  Enables building navigation graphs and handling transitions between screens.

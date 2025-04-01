@@ -29,14 +29,14 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.sj.unittestworkshop.MainActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview
-fun EspressoUnitTestView() {
+fun EspressoUnitTestView(navHostController: NavHostController) {
 
     val quote by remember {
         mutableStateOf(
@@ -56,6 +56,11 @@ fun EspressoUnitTestView() {
     val gender = remember {
         mutableStateOf("Male")
     }
+
+    val openImagePicker = remember {
+        mutableStateOf(false)
+    }
+
 
     Scaffold(
         topBar = {
@@ -171,6 +176,19 @@ fun EspressoUnitTestView() {
 
                 MobileNumberInput()
 
+                Button(
+                    onClick = {
+                        navHostController.navigate(MainActivity.ScreenNames.ImagePickerScreen.route) {
+                            launchSingleTop = true
+                        }
+                    },
+                    modifier = Modifier
+                        .padding(top = 20.dp, start = 50.dp)
+                        .semantics {
+                            contentDescription = "buttonImagePicker"
+                        }) {
+                    Text(text = "Open Image Picker")
+                }
 
             }
 

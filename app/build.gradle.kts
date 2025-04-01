@@ -59,14 +59,13 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    testImplementation(libs.junit.junit)
-    androidTestImplementation(libs.androidx.core)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.junit.ktx)
-    androidTestImplementation(libs.core.ktx)
-    androidTestImplementation(libs.androidx.runner)
-    androidTestImplementation(libs.core.ktx)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    testImplementation(libs.junit.junit) // JUnit for Unit Testing
+    androidTestImplementation(libs.androidx.core)  // Core library for Android instrumentation tests
+    androidTestImplementation(libs.androidx.junit) // JUnit extension library for Android instrumentation tests
+    androidTestImplementation(libs.core.ktx)  // Kotlin extensions for Android instrumentation tests
+    androidTestImplementation(libs.androidx.runner) // Android Test Runner for instrumentation tests
+    androidTestImplementation(libs.androidx.ui.test.junit4) // Compose UI testing library
 
     //Espresso
     androidTestImplementation(libs.androidx.espresso.core)
@@ -87,6 +86,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Navigation Compose
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.runtime.ktx)
 
 //implementation (libs.androidx.hilt.navigation.compose)
     // Optional - Integration with ViewModels
