@@ -43,7 +43,7 @@ jobs:
           run: |
             if [ -f "build.gradle.kts" ]; then
               echo "build.gradle.kts found in root"
-              VERSION_CODE=$(grep "versionCode[[:space:]]*=" build.gradle.kts | awk -F '=' '{print $2}' | sed 's/[^0-9]*//g')
+              VERSION_CODE=$(grep "versionCode[[:space:]]*=" build.gradle.kts | awk -F '=' '{print $2}' | sed 's/[^0-9]*//g' | head -n 1)
               echo "Current versionCode (from root/build.gradle.kts): $VERSION_CODE"
               echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
             else
