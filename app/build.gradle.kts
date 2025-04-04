@@ -15,18 +15,14 @@ android {
         applicationId = "com.sj.unittestworkshop"
         minSdk = 31
         targetSdk = 35
-        //versionCode = 1
-        //versionName = "1.0"
-
         versionCode = findProperty("versionCode")?.toString()?.toInt() ?: 1
         versionName = findProperty("versionName")?.toString() ?: "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         debug {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
         }
         release {
             isMinifyEnabled = false
