@@ -34,6 +34,9 @@ jobs:
         - name: Make gradlew executable
           run: chmod +x ./gradlew
 
+        - name: List files in current directory (debug)
+          run: ls -al
+
         - name: Get current versionCode
           id: get_version_code
           working-directory: ./app # Explicitly set the working directory
