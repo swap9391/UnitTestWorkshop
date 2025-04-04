@@ -8,6 +8,10 @@ on:
         required: true
         default: 'UnitTestWorkshop Debug build to distribute on Firebase app distribution'
         description: 'Release Notes'
+      version_name:
+        type: number
+        required: true
+        description: 'Enter the Version Number for this build (float)'
 
 
 jobs:
@@ -40,3 +44,4 @@ jobs:
             groups: my-tester
             file: app/build/outputs/apk/debug/app-debug.apk
             releaseNotes: ${{inputs.release_notes}}
+            versionName: ${{ inputs.version_name }} # Use the input versionName
