@@ -1,4 +1,4 @@
-name: Deploy To Firease App Distribution
+name: Deploy To Firebase App Distribution
 
 on:
   workflow_dispatch:
