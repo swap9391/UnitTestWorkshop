@@ -44,9 +44,6 @@ jobs:
         - name: Execute Gradle command - clean and assembleDebug with Version Info
           run: ./gradlew clean assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
 
-        - name: Execute Gradle command - assembleDebug
-          run: ./gradlew assembleDebug
-
         - name: upload artifact to Firebase App Distribution
           uses: wzieba/Firebase-Distribution-Github-Action@v1
           with:
