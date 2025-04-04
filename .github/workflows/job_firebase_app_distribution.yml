@@ -6,8 +6,8 @@ on:
       release_notes:
         type: string
         required: true
-        default: 'Debug build to distribute on Firebase app distribution'
-        description: 'Debug build to distribute on Firebase app distribution'
+        default: 'UnitTestWorkshop Debug build to distribute on Firebase app distribution'
+        description: 'Release Notes'
 
 
 jobs:
@@ -30,3 +30,4 @@ jobs:
             serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
             groups: my-tester
             file: app/build/intermediates/apk/debug/app-debug.apk
+            releaseNotes: ${{inputs.release_notes}}
