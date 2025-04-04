@@ -12,8 +12,8 @@ android {
         applicationId = "com.sj.unittestworkshop"
         minSdk = 31
         targetSdk = 35
-        versionCode = versionCode
-        versionName = versionName
+        versionCode = 1
+        versionName = "1.0"
         /*versionCode = project.properties["versionCode"].toString().toInt()
         versionName = project.properties["versionName"].toString()
 */
