@@ -15,8 +15,8 @@ android {
         //versionCode = 1
         //versionName = "1.0"
 
-        versionCode = project.properties["versionCode"]?.toString()?.toInt() ?: 1
-        versionName = project.properties["versionName"]?.toString() ?: "1.0"
+        versionCode = project.properties["versionCode"]?.toString()?.toInt()
+        versionName = project.properties["versionName"]?.toString()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
