@@ -11,6 +11,7 @@ on:
       version_name:
         type: string
         required: true
+        default: '1.0'
         description: 'Version Name (e.g., 1.0)'
 
 
