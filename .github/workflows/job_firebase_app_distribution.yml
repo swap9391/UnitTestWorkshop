@@ -44,11 +44,8 @@ jobs:
         - name: Install Firebase CLI
           run: npm install -g firebase-tools
 
-        - name: Authenticate Firebase CLI
-          run: |
-            echo "${{ secrets.FIREBASE_CI_TOKEN }}" > firebase_token.txt
-            firebase login --token "$(cat firebase_token.txt)"
-            rm firebase_token.txt
+        - name: Authenticate Firebase CLI (Direct)
+          run: firebase login --token "${{ secrets.FIREBASE_CI_TOKEN }}"
 
         - name: Fetch Remote Config
           id: fetch_config
