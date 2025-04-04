@@ -13,14 +13,8 @@ android {
         applicationId = "com.sj.unittestworkshop"
         minSdk = 31
         targetSdk = 35
-        val versionCodeProp = findProperty("versionCode")
-        val versionNameProp = findProperty("versionName")
-
-        println("versionCode from properties: ${versionCodeProp}")
-        println("versionName from properties: ${versionNameProp}")
-
-        versionCode = versionCodeProp?.toString()?.toInt() ?: 1 // Default to 1
-        versionName = versionNameProp?.toString() ?: "1.0" // Default to "1.0"
+        versionCode = project.properties["versionCode"]?.toString()?.toInt() ?: 1 // Default to 1
+        versionName = project.properties["versionName"]?.toString() ?: "1.0" // Default to "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
