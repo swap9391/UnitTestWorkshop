@@ -21,7 +21,7 @@ jobs:
         - name: set up JDK 1.8
           uses: actions/setup-java@v3
           with:
-            distribution: 'temurin'
+            distribution: 'xyz'
             java-version: '17'
 
         - name: Setup Gradle
