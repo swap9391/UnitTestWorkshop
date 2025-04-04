@@ -56,14 +56,6 @@ jobs:
            commit_message: "Increment versionCode to ${{ env.INCREMENTED_VERSION_CODE }}"
            file_pattern: version.txt
 
-
-        #- name: Increment versionCode
-        #  id: increment_version_code
-        #  run: |
-        #   INCREMENTED_VERSION_CODE=$(( ${{ secrets.VERSION_CODE_COUNTER }} + 1 ))
-        #    echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
-        #    echo "The incremented versionCode is=${{ env.INCREMENTED_VERSION_CODE }}"
-
         - name: Execute Gradle command - clean and assembleDebug with Version Info
           run: ./gradlew clean assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
 
