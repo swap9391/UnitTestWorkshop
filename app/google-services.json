@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "912520609607",
+    "project_id": "unittestworkshop",
+    "storage_bucket": "unittestworkshop.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912520609607:android:2b60d370fe8c3477c91662",
+        "android_client_info": {
+          "package_name": "com.sj.unittestworkshop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAZzBPs3GIbAqNO7ZO-T8EmbUCn3jr8qA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
