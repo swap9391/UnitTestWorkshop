@@ -44,6 +44,9 @@ jobs:
         - name: Install Firebase CLI
           run: npm install -g firebase-tools
 
+        - name: Install Firebase CLI
+          run: curl -sL firebase.tools | bash
+
         - name: Authenticate Firebase CLI
           run: |
             echo "${{ secrets.FIREBASE_CI_TOKEN }}" > firebase_token.txt
