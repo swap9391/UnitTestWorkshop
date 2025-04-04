@@ -34,12 +34,27 @@ jobs:
         - name: Make gradlew executable
           run: chmod +x ./gradlew
 
-        - name: Increment versionCode
+        - name: Get current versionCode
           id: increment_version_code
           run: |
-           INCREMENTED_VERSION_CODE=$(( ${{ secrets.VERSION_CODE_COUNTER }} + 1 ))
-            echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
-            echo "The incremented versionCode is=${{ env.INCREMENTED_VERSION_CODE }}"
+           INCREMENTED_VERSION_CODE=$(( ${{ env.VERSION_CODE }} + 1 ))
+           echo "Incremented versionCode: $INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
+           echo "The incremented versionCode is=${{ env.INCREMENTED_VERSION_CODE }}"
+           echo "$INCREMENTED_VERSION_CODE" > version.txt
+
+        - name: Commit and push versionCode update
+          uses: stefanzweifel/git-auto-commit-action@v5
+          with:
+           commit_message: "Increment versionCode to ${{ env.INCREMENTED_VERSION_CODE }}"
+           file_pattern: version.txt
+
+
+        #- name: Increment versionCode
+        #  id: increment_version_code
+        #  run: |
+        #   INCREMENTED_VERSION_CODE=$(( ${{ secrets.VERSION_CODE_COUNTER }} + 1 ))
+        #    echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
+        #    echo "The incremented versionCode is=${{ env.INCREMENTED_VERSION_CODE }}"
 
         - name: Execute Gradle command - clean and assembleDebug with Version Info
           run: ./gradlew clean assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
