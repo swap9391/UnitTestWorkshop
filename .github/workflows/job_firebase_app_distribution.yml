@@ -49,7 +49,7 @@ jobs:
 
         - name: Authenticate Firebase CLI
           run: |
-            echo ${{ secrets.FIREBASE_CI_TOKEN }} > firebase_token.txt
+            echo "${{secrets.FIREBASE_CI_TOKEN}}" > firebase_token.txt
             firebase login --token "$(cat firebase_token.txt)"
             rm firebase_token.txt
 
