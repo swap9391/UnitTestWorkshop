@@ -35,6 +35,13 @@ jobs:
           run: chmod +x ./gradlew
 
         - name: Get current versionCode
+          id: get_version_code
+          run: |
+              VERSION_CODE=$(cat version.txt)
+              echo "Current versionCode from file: $VERSION_CODE"
+              echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV  
+
+        - name: Increment versionCode and update file
           id: increment_version_code
           run: |
            INCREMENTED_VERSION_CODE=$(( ${{ env.VERSION_CODE }} + 1 ))
