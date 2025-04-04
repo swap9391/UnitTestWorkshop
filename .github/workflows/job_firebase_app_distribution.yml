@@ -51,25 +51,25 @@ jobs:
               echo "$INCREMENTED_VERSION_CODE" > version.txt
               cat version.txt
 
-              - name: Configure Git
-                run: |
-                  git config --local user.name "GitHub Actions Bot"
-                  git config --local user.email "actions@github.com"
+        - name: Configure Git
+          run: |
+              git config --local user.name "GitHub Actions Bot"
+              git config --local user.email "actions@github.com"
 
-              - name: Check Git Remote
-                run: git remote -v
+        - name: Check Git Remote
+          run: git remote -v
 
-              - name: Check Branch Tracking
-                run: git branch -vv
+        - name: Check Branch Tracking
+          run: git branch -vv
 
-              - name: Check Git Status
-                run: git status
+        - name: Check Git Status
+          run: git status
 
-              - name: Commit and push versionCode update
-                uses: stefanzweifel/git-auto-commit-action@v5
-                with:
-                  commit_message: "Increment versionCode to ${{ env.INCREMENTED_VERSION_CODE }}"
-                  file_pattern: version.txt
+        - name: Commit and push versionCode update
+          uses: stefanzweifel/git-auto-commit-action@v5
+          with:
+           commit_message: "Increment versionCode to ${{ env.INCREMENTED_VERSION_CODE }}"
+           file_pattern: version.txt
 
         - name: Execute Gradle command - clean and assembleDebug with Version Info
           run: ./gradlew clean assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
