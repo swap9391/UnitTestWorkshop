@@ -9,9 +9,9 @@ on:
         default: 'UnitTestWorkshop Debug build to distribute on Firebase app distribution'
         description: 'Release Notes'
       version_name:
-        type: number
+        type: string
         required: true
-        description: 'Enter the Version Number for this build (float)'
+        description: 'Version Name (e.g., 1.0)'
 
 
 jobs:
@@ -32,6 +32,20 @@ jobs:
 
         - name: Make gradlew executable
           run: chmod +x ./gradlew
+
+        - name: Get current versionCode
+          id: get_version_code
+          run: VERSION_CODE=$(grep "versionCode " app/build.gradle | awk '{print $2}')
+            echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+
+        - name: Increment versionCode
+          id: increment_version_code
+          run: INCREMENTED_VERSION_CODE=$(( ${{ env.VERSION_CODE }} + 1 ))
+            echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
+            echo "INCREMENTED_VERSION_CODE=${{ env.INCREMENTED_VERSION_CODE }}" # For debugging
+
+        - name: Execute Gradle command - assembleDebug with Version Info
+          run: ./gradlew assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
 
         - name: Execute Gradle command - assembleDebug
           run: ./gradlew assembleDebug
