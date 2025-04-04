@@ -4,6 +4,7 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+
 android {
     namespace = "com.sj.unittestworkshop"
     compileSdk = 35
@@ -12,15 +13,14 @@ android {
         applicationId = "com.sj.unittestworkshop"
         minSdk = 31
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
-
+        versionCode = project.properties["versionCode"]?.toString()?.toInt() ?: 1 // Default to 1
+        versionName = project.properties["versionName"]?.toString() ?: "1.0" // Default to "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         debug {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
         }
         release {
             isMinifyEnabled = false

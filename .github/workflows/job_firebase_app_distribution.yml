@@ -8,12 +8,19 @@ on:
         required: true
         default: 'UnitTestWorkshop Debug build to distribute on Firebase app distribution'
         description: 'Release Notes'
+      version_name:
+        type: number
+        required: true
+        default: 1.0
+        description: 'Version Name (e.g., 1.0)'
 
 
 jobs:
     build:
       name: Building and distributing app on Debug variant
       runs-on: ubuntu-latest
+      permissions:
+        contents: write  # Grant write permission to the repository's contents
 
       steps:
         - uses: actions/checkout@v3
@@ -29,8 +36,55 @@ jobs:
         - name: Make gradlew executable
           run: chmod +x ./gradlew
 
-        - name: Execute Gradle command - assembleDebug
-          run: ./gradlew assembleDebug
+        - name: Access Specific Values (Example)
+          run: |
+           version_code=$(echo "$REMOTE_CONFIG_JSON" | jq -r '.parameters.version_code.defaultValue.value')
+           version_name=$(echo "$REMOTE_CONFIG_JSON" | jq -r '.parameters.version_name.defaultValue.value')
+           echo "Fetched versionCode: $version_code"
+           echo "Fetched versionName: $version_name"
+           echo "VERSION_CODE=$version_code" >> $GITHUB_ENV
+           echo "VERSION_NAME=$version_name" >> $GITHUB_ENV   
+
+        - name: Get current versionCode
+          id: get_version_code
+          run: |
+              VERSION_CODE=$(cat version.txt)
+              echo "Current versionCode from file: $VERSION_CODE"
+              echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV  
+
+        - name: Increment versionCode and update file
+          id: increment_version_code
+          run: |
+              VERSION_CODE=$(cat version.txt)
+              INCREMENTED_VERSION_CODE=$(( $VERSION_CODE + 1 ))
+              echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
+              echo "The incremented versionCode is=$INCREMENTED_VERSION_CODE"
+              echo "$INCREMENTED_VERSION_CODE" > version.txt
+              cat version.txt
+
+        - name: Configure Git
+          run: |
+              git config --local user.name "GitHub Actions Bot"
+              git config --local user.email "actions@github.com"
+
+        - name: Check Git Remote
+          run: git remote -v
+
+        - name: Check Branch Tracking
+          run: git branch -vv
+
+        - name: Check Git Status
+          run: git status
+
+        - name: Commit and push versionCode update
+          uses: stefanzweifel/git-auto-commit-action@v5
+          with:
+           commit_message: "Increment versionCode to ${{ env.INCREMENTED_VERSION_CODE }}"
+           file_pattern: version.txt
+           #github_token: ${{ secrets.GH_TOKEN }} # Use the secret you created
+
+        - name: Execute Gradle command - clean and assembleDebug with Version Info
+          run: ./gradlew clean assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
 
         - name: upload artifact to Firebase App Distribution
           uses: wzieba/Firebase-Distribution-Github-Action@v1
