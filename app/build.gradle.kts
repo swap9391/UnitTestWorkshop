@@ -4,6 +4,9 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+println("versionCode from properties: ${project.properties["versionCode"]}")
+println("versionName from properties: ${project.properties["versionName"]}")
+
 android {
     namespace = "com.sj.unittestworkshop"
     compileSdk = 35
