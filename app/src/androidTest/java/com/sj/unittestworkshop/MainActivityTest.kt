@@ -1,7 +1,5 @@
 package com.sj.unittestworkshop
 
-import android.content.Intent
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertIsNotSelected
@@ -12,14 +10,7 @@ import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.rule.IntentsRule
-import com.sj.unittestworkshop.composeviews.EspressoUnitTestView
-import com.sj.unittestworkshop.composeviews.ImagePickerFromGalleryAndCamera
 import org.junit.Rule
 import org.junit.Test
 
