@@ -44,4 +44,4 @@ jobs:
             groups: my-tester
             file: app/build/outputs/apk/debug/app-debug.apk
             releaseNotes: ${{inputs.release_notes}}
-            versionName: ${{ inputs.version_name }} # Use the input versionName
+            versionName: ${{inputs.version_name }} # Use the input versionName
