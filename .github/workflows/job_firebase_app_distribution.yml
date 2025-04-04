@@ -19,6 +19,8 @@ jobs:
     build:
       name: Building and distributing app on Debug variant
       runs-on: ubuntu-latest
+      permissions:
+        contents: write  # Grant write permission to the repository's contents
 
       steps:
         - uses: actions/checkout@v3
