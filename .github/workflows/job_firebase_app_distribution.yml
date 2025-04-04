@@ -36,6 +36,34 @@ jobs:
         - name: Make gradlew executable
           run: chmod +x ./gradlew
 
+        - name: Set up Node.js
+          uses: actions/setup-node@v3
+          with:
+              node-version: 'lts/*'
+
+        - name: Install Firebase CLI
+          run: npm install -g firebase-tools
+
+        - name: Authenticate Firebase CLI
+          run: firebase login --token "${{ secrets.FIREBASE_TOKEN }}"
+          env:
+               FIREBASE_TOKEN: ${{ secrets.FIREBASE_CI_TOKEN }} # Or however you store your token
+
+        - name: Fetch Remote Config
+          id: fetch_config
+          run: |
+                  config=$(firebase remoteconfig:get --json)
+                  echo "REMOTE_CONFIG_JSON=$config" >> $GITHUB_ENV
+
+        - name: Access Specific Values (Example)
+          run: |
+           version_code=$(echo "$REMOTE_CONFIG_JSON" | jq -r '.parameters.version_code.defaultValue.value')
+           version_name=$(echo "$REMOTE_CONFIG_JSON" | jq -r '.parameters.version_name.defaultValue.value')
+           echo "Fetched versionCode: $version_code"
+           echo "Fetched versionName: $version_name"
+           echo "VERSION_CODE=$version_code" >> $GITHUB_ENV
+           echo "VERSION_NAME=$version_name" >> $GITHUB_ENV   
+
         - name: Get current versionCode
           id: get_version_code
           run: |
