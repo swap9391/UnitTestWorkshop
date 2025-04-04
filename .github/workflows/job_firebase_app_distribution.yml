@@ -39,13 +39,14 @@ jobs:
 
         - name: Get current versionCode
           id: get_version_code
-          working-directory: ./app # Explicitly set the working directory
-          run: VERSION_CODE=$(grep "versionCode " build.gradle.kts | awk '{print $2}')
-            echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          run: |
+              VERSION_CODE=$(grep "versionCode " build.gradle.kts | awk '{print $2}')
+              echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
 
         - name: Increment versionCode
           id: increment_version_code
-          run: INCREMENTED_VERSION_CODE=$(( ${{ env.VERSION_CODE }} + 1 ))
+          run: |
+           INCREMENTED_VERSION_CODE=$(( ${{ env.VERSION_CODE }} + 1 ))
             echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
             echo "The incremented versionCode is:${{ env.INCREMENTED_VERSION_CODE }}"
 
