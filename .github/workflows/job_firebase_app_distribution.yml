@@ -55,8 +55,8 @@ jobs:
           id: increment_version_code
           run: |
            INCREMENTED_VERSION_CODE=$(( ${{ env.VERSION_CODE }} + 1 ))
-            echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
-            echo "The incremented versionCode is:${{ env.INCREMENTED_VERSION_CODE }}"
+            echo "INCREMENTED_VERSION_CODE= $INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
+            echo "The incremented versionCode is: ${{ env.INCREMENTED_VERSION_CODE }}"
 
         - name: Execute Gradle command - assembleDebug with Version Info
           run: ./gradlew assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
@@ -72,4 +72,3 @@ jobs:
             groups: my-tester
             file: app/build/outputs/apk/debug/app-debug.apk
             releaseNotes: ${{inputs.release_notes}}
-            versionName: ${{inputs.version_name }} # Use the input versionName
