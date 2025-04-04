@@ -9,9 +9,9 @@ on:
         default: 'UnitTestWorkshop Debug build to distribute on Firebase app distribution'
         description: 'Release Notes'
       version_name:
-        type: string
+        type: number
         required: true
-        default: '1.0'
+        default: 1.0
         description: 'Version Name (e.g., 1.0)'
 
 
@@ -34,27 +34,10 @@ jobs:
         - name: Make gradlew executable
           run: chmod +x ./gradlew
 
-        - name: List files in current directory (debug)
-          run: ls -al
-
-        - name: Get current versionCode
-          id: get_version_code
-          working-directory: ./app
-          run: |
-            if [ -f "build.gradle.kts" ]; then
-              echo "build.gradle.kts found in root"
-              VERSION_CODE=$(grep "versionCode[[:space:]]*=" build.gradle.kts | awk -F '=' '{print $2}' | sed 's/[^0-9]*//g' | head -n 1)
-              echo "Current versionCode (from root/build.gradle.kts): $VERSION_CODE"
-              echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
-            else
-              echo "Error: build.gradle.kts not found in root"
-              exit 1
-            fi
-
         - name: Increment versionCode
           id: increment_version_code
           run: |
-           INCREMENTED_VERSION_CODE=$(( ${{ env.VERSION_CODE }} + 1 ))
+           INCREMENTED_VERSION_CODE=$(( ${{ secrets.VERSION_CODE_COUNTER }} + 1 ))
             echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
             echo "The incremented versionCode is:${{ env.INCREMENTED_VERSION_CODE }}"
 
