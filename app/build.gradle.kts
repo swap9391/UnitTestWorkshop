@@ -15,8 +15,8 @@ android {
         applicationId = "com.sj.unittestworkshop"
         minSdk = 31
         targetSdk = 35
-        versionCode = findProperty("versionCode")?.toString()?.toInt() ?: 1
-        versionName = findProperty("versionName")?.toString() ?: "1.0"
+        versionCode = project.properties["versionCode"]?.toString()?.toInt() ?: 2 // Default to 1
+        versionName = project.properties["versionName"]?.toString() ?: "1.0" // Default to "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
