@@ -70,7 +70,7 @@ jobs:
           with:
            commit_message: "Increment versionCode to ${{ env.INCREMENTED_VERSION_CODE }}"
            file_pattern: version.txt
-           github_token: ${{ secrets.GH_TOKEN }} # Use the secret you created
+           #github_token: ${{ secrets.GH_TOKEN }} # Use the secret you created
 
         - name: Execute Gradle command - clean and assembleDebug with Version Info
           run: ./gradlew clean assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
