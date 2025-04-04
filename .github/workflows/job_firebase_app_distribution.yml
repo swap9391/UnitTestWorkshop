@@ -44,10 +44,11 @@ jobs:
         - name: Increment versionCode and update file
           id: increment_version_code
           run: |
-           INCREMENTED_VERSION_CODE=$(( ${{ env.VERSION_CODE }} + 1 ))
-           echo "Incremented versionCode: $INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
-           echo "The incremented versionCode is=${{ env.INCREMENTED_VERSION_CODE }}"
-           echo "$INCREMENTED_VERSION_CODE" > version.txt
+              VERSION_CODE=$(cat version.txt) # Read the current value
+              INCREMENTED_VERSION_CODE=$(( $VERSION_CODE + 1 ))
+              echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
+              echo "The incremented versionCode is=$INCREMENTED_VERSION_CODE"
+              echo "$INCREMENTED_VERSION_CODE" > version.txt
 
         - name: Commit and push versionCode update
           uses: stefanzweifel/git-auto-commit-action@v5
