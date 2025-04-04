@@ -12,11 +12,11 @@ android {
         applicationId = "com.sj.unittestworkshop"
         minSdk = 31
         targetSdk = 35
-        //versionCode = 1
-        //versionName = "1.0"
-        versionCode = project.properties["versionCode"].toString().toInt()
+        versionCode = 1
+        versionName = "1.0"
+        /*versionCode = project.properties["versionCode"].toString().toInt()
         versionName = project.properties["versionName"].toString()
-
+*/
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
