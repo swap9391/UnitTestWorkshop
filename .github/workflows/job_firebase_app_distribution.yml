@@ -36,15 +36,6 @@ jobs:
         - name: Make gradlew executable
           run: chmod +x ./gradlew
 
-        - name: Access Specific Values (Example)
-          run: |
-           version_code=$(echo "$REMOTE_CONFIG_JSON" | jq -r '.parameters.version_code.defaultValue.value')
-           version_name=$(echo "$REMOTE_CONFIG_JSON" | jq -r '.parameters.version_name.defaultValue.value')
-           echo "Fetched versionCode: $version_code"
-           echo "Fetched versionName: $version_name"
-           echo "VERSION_CODE=$version_code" >> $GITHUB_ENV
-           echo "VERSION_NAME=$version_name" >> $GITHUB_ENV   
-
         - name: Get current versionCode
           id: get_version_code
           run: |
@@ -81,7 +72,6 @@ jobs:
           with:
            commit_message: "Increment versionCode to ${{ env.INCREMENTED_VERSION_CODE }}"
            file_pattern: version.txt
-           #github_token: ${{ secrets.GH_TOKEN }} # Use the secret you created
 
         - name: Execute Gradle command - clean and assembleDebug with Version Info
           run: ./gradlew clean assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
