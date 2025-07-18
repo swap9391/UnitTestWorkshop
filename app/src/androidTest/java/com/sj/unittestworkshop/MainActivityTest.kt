@@ -11,8 +11,11 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.espresso.intent.rule.IntentsRule
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test
+import kotlin.time.Duration.Companion.seconds
 
 class MainActivityTest{
 
@@ -26,6 +29,9 @@ class MainActivityTest{
     fun testTextDisplay() {
         composeTestRule.onNodeWithContentDescription("labelQuote").assertIsDisplayed()
         composeTestRule.onNodeWithText("My Quote!").assertExists()
+        runBlocking {
+            delay(2.seconds.inWholeMilliseconds)
+        }
     }
 
     @Test
@@ -45,6 +51,11 @@ class MainActivityTest{
         composeTestRule.onNodeWithContentDescription("buttonPrevQuote").performClick()
         //Assert
         composeTestRule.onNodeWithContentDescription("labelQuoteValue").assertTextEquals(initialQuote)
+
+        runBlocking {
+            delay(2.seconds.inWholeMilliseconds)
+        }
+
         composeTestRule.onNodeWithText(initialQuote).assertIsDisplayed()
     }
 
@@ -59,6 +70,9 @@ class MainActivityTest{
 
         composeTestRule.onNodeWithContentDescription("radioButtonFemale").assertIsSelected()
 
+        runBlocking {
+            delay(2.seconds.inWholeMilliseconds)
+        }
     }
 
     @Test
@@ -68,6 +82,9 @@ class MainActivityTest{
         composeTestRule.onNodeWithContentDescription("textFieldMobile").performTextInput("8248482")
         composeTestRule.onNodeWithContentDescription("labelMobileNumberError").assertIsDisplayed()
         composeTestRule.onNodeWithContentDescription("labelMobileNumberError").assertTextEquals(errorMessage)
+        runBlocking {
+            delay(2.seconds.inWholeMilliseconds)
+        }
     }
 
     @Test
@@ -75,6 +92,9 @@ class MainActivityTest{
 
         composeTestRule.onNodeWithContentDescription("textFieldMobile").performTextInput("8248482667")
         composeTestRule.onNodeWithContentDescription("labelMobileNumberError").assertIsNotDisplayed()
+        runBlocking {
+            delay(2.seconds.inWholeMilliseconds)
+        }
     }
 
     @Test
@@ -83,6 +103,10 @@ class MainActivityTest{
 
         // Assert
         composeTestRule.onNodeWithText("Image Picker").assertExists()
+
+        runBlocking {
+            delay(2.seconds.inWholeMilliseconds)
+        }
     }
 
 
