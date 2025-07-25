@@ -1,82 +1,104 @@
 name: Deploy To Firebase App Distribution
 
 on:
-  workflow_dispatch:
-    inputs:
-      release_notes:
-        type: string
-        required: true
-        default: 'UnitTestWorkshop Debug build to distribute on Firebase app distribution'
-        description: 'Release Notes'
-      version_name:
-        type: number
-        required: true
-        default: 1.0
-        description: 'Version Name (e.g., 1.0)'
+  workflow_dispatch: # Allows manual triggering of the workflow from the GitHub UI
+    inputs: # Defines the inputs that can be provided when manually triggering the workflow
+      release_notes: # Defines an input named 'release_notes'
+        type: string # Specifies that the input value should be a string
+        required: true # Indicates that this input is mandatory
+        default: 'UnitTestWorkshop Debug build to distribute on Firebase app distribution' # Sets a default value if not provided
+        description: 'Release Notes' # Provides a description for the input field in the UI
+      version_name: # Defines an input named 'version_name'
+        type: number # Specifies that the input value should be a number
+        required: true # Indicates that this input is mandatory
+        default: 1.0 # Sets a default value if not provided
+        description: 'Version Name (e.g., 1.0)' # Provides a description for the input field in the UI
 
 
 jobs:
-    build:
-      name: Building and distributing app on Debug variant
-      runs-on: ubuntu-latest
+    build: # Defines a job named 'build'
+      name: Building and distributing app on Debug variant # Sets a display name for the job
+      runs-on: ubuntu-latest # Specifies that the job will run on the latest version of Ubuntu
       permissions:
-        contents: write  # Grant write permission to the repository's contents
+        contents: write  # Grant write permission to the repository's contents for version.txt
 
-      steps:
-        - uses: actions/checkout@v3
+      steps: # Defines the sequence of steps to be executed in the job
+        - uses: actions/checkout@v3 # Checks out the repository code
 
-        - uses: actions/setup-java@v3
-          with:
-            distribution: 'temurin'
-            java-version: '17'
+        - uses: actions/setup-java@v3 # Sets up the Java environment
+          with: # Provides parameters for the 'setup-java' action
+            distribution: 'temurin' # Specifies the Java distribution to use (Temurin, an OpenJDK distribution)
+            java-version: '17' # Specifies the Java version to use (version 17)
 
-        - name: Setup Gradle
-          uses: gradle/gradle-build-action@v2
+        - name: Setup Gradle # Sets up Gradle for building the project
+          uses: gradle/gradle-build-action@v2 # Uses the official Gradle build action
 
-        - name: Make gradlew executable
-          run: chmod +x ./gradlew
+        - name: Make gradlew executable # Makes the Gradle wrapper script executable
+          run: chmod +x ./gradlew # Runs the 'chmod' command to grant execute permission
 
-        - name: Get current versionCode
-          id: get_version_code
+        - name: Get current versionCode # This step reads the current version code from a file named version.txt
+          id: get_version_code # Assigns an ID to this step so its outputs can be referenced later
+          #Reads the content of version.txt and stores it in VERSION_CODE variable
+          # Prints the current version code to the console
+          # Sets the VERSION_CODE as an environment variable for subsequent steps
           run: |
-              VERSION_CODE=$(cat version.txt)
-              echo "Current versionCode from file: $VERSION_CODE"
+              VERSION_CODE=$(cat version.txt) 
+              echo "Current versionCode from file: $VERSION_CODE" 
               echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV  
 
         - name: Increment versionCode and update file
-          id: increment_version_code
+          id: increment_version_code # Assigns an ID to this step
+          # Reads the current version code again (could use the env var from previous step)
+          # Increments the version code by 1
+          # Sets the incremented version code as an environment variable
+          # Prints the new version code
+          # Overwrites version.txt with the new incremented version code
+          # Prints the content of the updated version.txt file to verify
           run: |
-              VERSION_CODE=$(cat version.txt)
-              INCREMENTED_VERSION_CODE=$(( $VERSION_CODE + 1 ))
-              echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV
-              echo "The incremented versionCode is=$INCREMENTED_VERSION_CODE"
-              echo "$INCREMENTED_VERSION_CODE" > version.txt
-              cat version.txt
+              VERSION_CODE=$(cat version.txt) 
+              INCREMENTED_VERSION_CODE=$(( $VERSION_CODE + 1 )) 
+              echo "INCREMENTED_VERSION_CODE=$INCREMENTED_VERSION_CODE" >> $GITHUB_ENV 
+              echo "The incremented versionCode is=$INCREMENTED_VERSION_CODE" 
+              echo "$INCREMENTED_VERSION_CODE" > version.txt 
+              cat version.txt 
 
-        - name: Configure Git
+        - name: Configure Git # Configures Git with a user name and email for commits made by the workflow
+          # Sets the local Git user name for commits
+          # Sets the local Git user email for commits
           run: |
-              git config --local user.name "GitHub Actions Bot"
-              git config --local user.email "actions@github.com"
+              git config --local user.name "GitHub Actions Bot" 
+              git config --local user.email "actions@github.com" 
 
-        - name: Check Git Remote
-          run: git remote -v
+        - name: Check Git Remote # Displays the configured remote repositories to verify setup
+          run: git remote -v # Lists all remote repositories and their URLs
 
-        - name: Check Branch Tracking
-          run: git branch -vv
+        - name: Check Branch Tracking # Shows which remote branches local branches are tracking
+          run: git branch -vv # Lists all local branches with details about their upstream tracking branches
 
-        - name: Check Git Status
-          run: git status
+        - name: Check Git Status # Displays the current status of the Git working directory (e.g., modified files)
+          run: git status # Shows which files are staged, unstaged, or untracked
 
-        - name: Commit and push versionCode update
-          uses: stefanzweifel/git-auto-commit-action@v5
-          with:
-           commit_message: "Increment versionCode to ${{ env.INCREMENTED_VERSION_CODE }}"
-           file_pattern: version.txt
+        - name: Commit and push versionCode update # Commits the updated version.txt file and pushes it to the repository
+          uses: stefanzweifel/git-auto-commit-action@v5 # Uses a third-party action to automate Git commits
+          with: # Provides parameters for the 'git-auto-commit-action'
+           commit_message: "Increment versionCode to ${{ env.INCREMENTED_VERSION_CODE }}" # Sets the commit message, including the new version code
+           file_pattern: version.txt # Specifies that only changes to version.txt should be committed
 
         - name: Execute Gradle command - clean and assembleDebug with Version Info
+          # This step executes the Gradle build command.
+          # 'clean' task: Cleans the build directory, removing previous build outputs.
+          # 'assembleDebug' task: Builds the debug variant of the Android application.
+          # '-PversionCode=${{ env.INCREMENTED_VERSION_CODE }}': Passes the incremented version code (from the environment variable set earlier) as a project property to Gradle.
+          # '-PversionName="${{ inputs.version_name }}"': Passes the version name (from the workflow input) as a project property to Gradle.
           run: ./gradlew clean assembleDebug -PversionCode=${{ env.INCREMENTED_VERSION_CODE }} -PversionName="${{ inputs.version_name }}"
 
         - name: upload artifact to Firebase App Distribution
+          # This step uses a third-party GitHub Action (wzieba/Firebase-Distribution-Github-Action@v1) to upload the built APK to Firebase App Distribution.
+          # 'appId': The Firebase App ID, retrieved from GitHub secrets.
+          # 'serviceCredentialsFileContent': The content of the Firebase service account JSON file, retrieved from GitHub secrets. This is used for authentication.
+          # 'groups': Specifies the tester group(s) in Firebase App Distribution to whom the build should be distributed (e.g., 'my-tester').
+          # 'file': The path to the APK file to be uploaded. In this case, it's the debug APK generated by the Gradle build.
+          # 'releaseNotes': The release notes for this build, taken from the workflow input.
           uses: wzieba/Firebase-Distribution-Github-Action@v1
           with:
             appId: ${{secrets.FIREBASE_APP_ID}}
